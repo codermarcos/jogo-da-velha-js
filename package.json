@@ -1,0 +1,53 @@
+{
+  "name": "jogo-da-velha-api",
+  "version": "0.0.0",
+  "description": "Jogo da velha em Node.js com socket.io",
+  "main": "lib/jogo-da-velha.js",
+  "scripts": {
+    "test:tdd": "npx mocha tests/**/*.test.js --require babel-register -w",
+    "test": "npx mocha tests/**/*.test.js --require babel-register",
+    "start": "npx webpack --config build/webpack.dev.js -w",
+    "build": "npx webpack --config build/webpack.prod.js -p",
+    "lint": "npx eslint ./src/simple-mask-money.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codermarcos/jogo-da-velha-api.git"
+  },
+  "keywords": [
+    "jogo-da-velha",
+    "jogo",
+    "velha",
+    "hash-game",
+    "hash",
+    "node",
+    "javascript",
+    "js",
+    "game"
+  ],
+  "author": {
+    "name": "codermarcos",
+    "email": "coder.marcos@gmail.com",
+    "url": "https://github.com/codermarcos"
+  },
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/codermarcos/jogo-da-velha-api/issues"
+  },
+  "homepage": "https://github.com/codermarcos/jogo-da-velha-api#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "clean-webpack-plugin": "^0.1.19",
+    "eslint": "^5.2.0",
+    "eslint-loader": "^2.1.0",
+    "eslint-plugin-mocha": "^5.1.0",
+    "mocha": "^5.2.0",
+    "webpack": "^4.16.1",
+    "webpack-cli": "^3.1.0",
+    "webpack-merge": "^4.1.3"
+  }
+}
