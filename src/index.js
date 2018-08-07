@@ -1,71 +1,50 @@
-import { Board } from './board';
-import { Players } from './players';
+const Board = require('./board');
+const Players = require('./players');
 
-export class JogoDaVelha {
-  constructor({ onstart, onnext, onfinish }) {
-    this.onstart = onstart || function(){};
-    this.onnext = onnext || function(){};
-    this.onfinish = onfinish || function(){};
+module.exports = class JogoDaVelha {
+  constructor(params) {
+    this.onstart = () => { };
+    this.onnext = () => { };
+    this.onfinish = () => { };
 
-    let _players = new Players();
+    if (params) {
+      this.onstart = params.onstart || this.onstart;
+      this.onnext = params.onnext || this.onnext;
+      this.onfinish = params.onfinish || this.onfinish;
+    }
+
+    const _players = new Players();
     let _board = new Board();
+    let _next = -1;
 
     this.next = {
-      player: -1,
       play({ p, x, y }) {
         if (p) {
           y = Math.ceil(p / 3) - 1;
           x = p % 3;
-        }             
+        }
 
         this.onnext();
         _board[y][x] = this.next.player;
 
-        const winner = this.winner;
-        if(winner) { 
-          this.onfinish(winner); 
+        const { winner } = _board;
+        if (winner) {
+          this.onfinish(_players[winner]);
         } else {
           this.next.player = this.next.player === 1 ? -1 : 1;
         }
-      }
-    }
-    
-    Object.defineProperty(this, 'winner', {
+      },
+    };
+
+    Object.defineProperty(this.next, 'player', {
       get() {
-        let dr = 0;
-        let dl = 0;
-  
-        for (let i = 0, x = 2; i <= 2; x-- , i++) {
-          dr += this.board[i][i];
-          dl += this.board[i][x];
-  
-          switch (3) {
-            case Math.abs(dr):
-              return _players[Math.sign(dr)];
-          
-            case Math.abs(dl):
-              return _players[Math.sign(dl)];
-          }
-  
-          let h = 0;
-          let v = 0;
-  
-          for (let y = 0; y <= 2; y++) {
-            h += this.board[x][y];
-            v += this.board[y][i];
-  
-            switch (3) {
-              case Math.abs(h):
-                return _players[Math.sign(h)];
-            
-              case Math.abs(v):
-                return _players[Math.sign(v)];
-            }
-          }
-        }      
-      }
+        return _players[_next];
+      },
+      set(value) {
+        _next = Number.isNaN(value) || Math.abs(value) !== 1 ? _players[value] : value;
+      },
     });
-    
+
     Object.defineProperty(this, 'board', {
       get() {
         return _board.map(
@@ -82,9 +61,7 @@ export class JogoDaVelha {
         );
       }
     });
-    
+
     this.onstart();
   }
-}
-
-module.exports = new JogoDaVelha();
+};
