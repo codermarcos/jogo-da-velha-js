@@ -14,7 +14,7 @@ module.exports = class JogoDaVelha {
     }
 
     const _players = new Players();
-    let _board = new Board();
+    let _board = new Board(params ? params.board : null);
     let _next = -1;
 
     this.next = {
@@ -29,7 +29,8 @@ module.exports = class JogoDaVelha {
 
         const { winner } = _board;
         if (winner) {
-          this.onfinish(_players[winner]);
+          this.winner = _players[winner];
+          this.onfinish(this.winner);
         } else {
           this.next.player = this.next.player === 1 ? -1 : 1;
         }
