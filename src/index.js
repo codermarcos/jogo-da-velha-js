@@ -13,10 +13,24 @@ module.exports = class JogoDaVelha {
       this.onfinish = params.onfinish || this.onfinish;
     }
 
-    const _players = new Players();
-    let _board = new Board(params ? params.board : null);
+    const _players = new Players(params ? params.players : null);
+    const _board = new Board(params ? params.board : null);
+    const _this = this;
     let _next = -1;
 
+    const updateWinner = () => {
+      let { winner } = _board;
+      if (winner) {
+        this.winner = _players[winner];
+        this.onfinish(this.winner);
+      } else {
+        delete this.winner;
+        winner = false;
+      }
+      return winner;
+    };
+
+    this.reset = () => _board.reset();
     this.next = {
       play({ p, x, y }) {
         if (p) {
@@ -24,15 +38,12 @@ module.exports = class JogoDaVelha {
           x = p % 3;
         }
 
-        this.onnext();
-        _board[y][x] = this.next.player;
-
-        const { winner } = _board;
-        if (winner) {
-          this.winner = _players[winner];
-          this.onfinish(this.winner);
+        if (_board[y][x] !== 0) {
+          throw new Error(`This position has already been played by ${_players[_board[y][x]]}`);
         } else {
-          this.next.player = this.next.player === 1 ? -1 : 1;
+          _this.onnext();
+          _board[y][x] = _next;
+          this.player = updateWinner() || _next === 1 ? -1 : 1;
         }
       },
     };
@@ -55,14 +66,16 @@ module.exports = class JogoDaVelha {
         );
       },
       set(value) {
-        _board = value.map(
-          vy => vy.map(
-            vx => _players[vx]
+        value.forEach(
+          (vy, y) => vy.forEach(
+            (vx, x) => _board[y][x] = _players[vx]
           )
         );
+        updateWinner();
       }
     });
 
     this.onstart();
+    updateWinner();
   }
 };

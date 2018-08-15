@@ -1,9 +1,8 @@
 module.exports = class Board extends Array {
   constructor(board) {
-    const empty = [0, 0, 0];
-    super(...board || [empty, empty, empty]);
+    super(...board || [[0, 0, 0], [0, 0, 0], [0, 0, 0]]);
 
-    this.reset = () => this.forEach((_, i) => this[i] = empty);
+    this.reset = () => this.forEach((_, i) => this[i] = [0, 0, 0]);
 
     Object.defineProperty(this, 'winner', {
       get() {

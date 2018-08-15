@@ -28,6 +28,7 @@
                 "SwitchCase": 1
             }
         ],
+        "no-console": "off",
         "default-case": "off",
         "no-plusplus": "off",
         "comma-dangle": "off",
