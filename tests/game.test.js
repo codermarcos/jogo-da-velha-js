@@ -1,16 +1,16 @@
 const chai = require('chai');
 const spies = require('chai-spies');
 
-const JogoDaVelha = require('../src/index');
+const Game = require('../src/game');
 
 let game;
 chai.should();
 chai.use(spies);
 
-describe('index', () => {
+describe('game', () => {
   describe('smook', () => {
     beforeEach(() => {
-      game = new JogoDaVelha();
+      game = new Game();
     });
     it('has correct board', () => {
       game.should.have.property('board');
@@ -34,7 +34,7 @@ describe('index', () => {
   describe('acceptance', () => {
     describe('with empty board', () => {
       before(() => {
-        game = new JogoDaVelha();
+        game = new Game();
       });
       it(
         'has correct board',
@@ -87,7 +87,7 @@ describe('index', () => {
           [1, 1, 0]
         ];
 
-        game = new JogoDaVelha({ board });
+        game = new Game({ board });
       });
       it(
         'has correct board',

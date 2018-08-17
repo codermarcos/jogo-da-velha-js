@@ -1,7 +1,7 @@
 const Board = require('./board');
 const Players = require('./players');
 
-module.exports = class JogoDaVelha {
+module.exports = class Game {
   constructor(params) {
     this.onstart = () => { };
     this.onnext = () => { };

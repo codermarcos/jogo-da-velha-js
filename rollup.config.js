@@ -6,12 +6,12 @@ import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
 
 export default {
-  input: 'src/index.js',
+  input: 'src/game.js',
   output: {
     file: 'lib/jogo-da-velha.js',
     format: 'umd'
   },
-  name: 'JogoDaVelha',
+  name: 'Game',
   plugins: [
     eslint({
       exclude: [
