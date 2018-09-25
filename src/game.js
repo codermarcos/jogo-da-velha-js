@@ -34,7 +34,7 @@ module.exports = class Game {
     this.next = {
       play({ p, x, y }) {
         if (typeof p !== 'undefined' && p !== null) {
-          y = Math.ceil(p / 3) - 1;
+          y = Math.ceil((p + 1) / 3) - 1;
           x = p % 3;
         }
 
