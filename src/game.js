@@ -33,7 +33,7 @@ module.exports = class Game {
     this.reset = () => _board.reset();
     this.next = {
       play({ p, x, y }) {
-        if (p) {
+        if (typeof p !== 'undefined' && p !== null) {
           y = Math.ceil(p / 3) - 1;
           x = p % 3;
         }

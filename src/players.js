@@ -1,12 +1,13 @@
 module.exports = class Players {
-  constructor(p1, p2) {
-    p1 = p1 || 'x';
-    p2 = p2 || 'o';
+  constructor(params) {
+    params = typeof params !== 'undefined' && params !== null ? params : {};
+    params.p1 = typeof params.p1 !== 'undefined' && params.p1 !== null ? params.p1 : 'x';
+    params.p2 = typeof params.p2 !== 'undefined' && params.p2 !== null ? params.p2 : 'o';
 
-    this[p1] = -1;
-    this[p2] = 1;
+    this[params.p1] = -1;
+    this[params.p2] = 1;
 
-    this[-1] = p1;
-    this[1] = p2;
+    this[-1] = params.p1;
+    this[1] = params.p2;
   }
 };

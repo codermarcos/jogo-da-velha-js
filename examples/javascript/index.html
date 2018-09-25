@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+
+  <title>JogoDaVelha</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Slabo+27px');
+      * {
+        border: 0 none;
+        color: #fff;
+        font-family: 'Slabo 27px', serif;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      body,
+      section {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        background-color: #000;
+      }
+      section {
+        width: 30%;
+        height: 50%;
+      }
+      input {
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;        
+        position: relative;
+        flex-basis: 28%;
+        height: 28%;
+      }
+      input::after {
+        position: absolute;
+        font-size: 5em;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+      }
+      input[x]:checked::after {        
+        content: 'X';
+      }
+      input[o]:checked::after {        
+        content: 'O';
+      }
+      .grid-vertical {
+        background-color: #fff;
+        flex-basis: 1.65%;
+        height: 33.3%;
+      }
+      .grid-horizontal {        
+        background-color: #fff;
+        flex-basis: 100%;
+        height: 1.80%;
+      }
+    </style>
+</head>
+
+<body>
+  <section>
+    <input type="checkbox" position="1">
+    <div class="grid-vertical"></div>
+    <input type="checkbox" position="2">
+    <div class="grid-vertical"></div>
+    <input type="checkbox" position="3">
+
+    <div class="grid-horizontal"></div>
+
+    <input type="checkbox" position="4">
+    <div class="grid-vertical"></div>
+    <input type="checkbox" position="5">
+    <div class="grid-vertical"></div>
+    <input type="checkbox" position="6">
+
+    <div class="grid-horizontal"></div>
+
+    <input type="checkbox" position="7">
+    <div class="grid-vertical"></div>
+    <input type="checkbox" position="8">
+    <div class="grid-vertical"></div>
+    <input type="checkbox" position="9">
+  </section>
+
+  <script src="../../lib/jogo-da-velha.js"></script>
+
+  <script>
+    const game = new Game({
+      onfinish(e) {
+        alert(e);
+      }
+    });
+    document
+      .querySelectorAll('input')
+      .forEach(el =>
+        el.addEventListener('input',
+          ev => {
+            if (!el.checked) { 
+              el.checked = true; 
+            } else {
+              el.setAttribute(game.next.player, '');
+              const p = el.getAttribute('position');
+              game.next.play({ p });
+            }
+          }
+        )
+      );
+  </script>
+</body>
+
+</html>
