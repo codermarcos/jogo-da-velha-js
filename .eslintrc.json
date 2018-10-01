@@ -36,6 +36,7 @@
         "no-param-reassign": "off",
         "no-underscore-dangle": "off",
         "no-array-constructor": "off",
+        "no-restricted-globals": "off",
         "mocha/no-exclusive-tests": "error",
         "import/no-extraneous-dependencies": "off"
     }

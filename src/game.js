@@ -33,17 +33,24 @@ module.exports = class Game {
     this.reset = () => _board.reset();
     this.next = {
       play({ p, x, y }) {
-        if (typeof p !== 'undefined' && p !== null) {
+        p = parseInt(p, 10);
+        if (!Number.isNaN(p)) {
           y = Math.ceil((p + 1) / 3) - 1;
           x = p % 3;
+        } else {
+          y = parseInt(y, 10);
+          x = parseInt(x, 10);
+
+          if (Number.isNaN(y)) { throw new Error('When p is not defined y should be define'); }
+          if (Number.isNaN(x)) { throw new Error('When p is not defined x should be define'); }
         }
 
         if (_board[y][x] !== 0) {
           throw new Error(`This position has already been played by ${_players[_board[y][x]]}`);
         } else {
-          _this.onnext();
           _board[y][x] = _next;
           this.player = updateWinner() || _next === 1 ? -1 : 1;
+          _this.onnext(_next);
         }
       },
     };

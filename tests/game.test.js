@@ -67,6 +67,30 @@ describe('game', () => {
         }
       );
       it(
+        'should require y without p',
+        () => {
+          let error = '';
+          try {
+            game.next.play({});
+          } catch (e) {
+            error = e.message;
+          }
+          error.should.to.equal('When p is not defined y should be define');
+        }
+      );
+      it(
+        'should require x without p',
+        () => {
+          let error = '';
+          try {
+            game.next.play({ y: 1 });
+          } catch (e) {
+            error = e.message;
+          }
+          error.should.to.equal('When p is not defined x should be define');
+        }
+      );
+      it(
         'reset',
         () => {
           const spy = chai.spy.on(game, 'reset');
