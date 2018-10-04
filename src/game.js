@@ -39,7 +39,7 @@ module.exports = class Game {
         } else {
           _board[y][x] = _next;
           const { winner } = _board;
-          
+
           if (winner) {
             _this.winner = _players[winner];
             _this.onfinish(_this.winner);

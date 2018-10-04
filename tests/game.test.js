@@ -43,13 +43,13 @@ describe('game', () => {
           game.board[1].should.to.eql(new Array(undefined, undefined, undefined));
           game.board[2].should.to.eql(new Array(undefined, undefined, undefined));
         }
-      );  
+      );
       it(
         'should have remaining with 8',
         () => {
           game.board.should.have.property('remaining', 9);
         }
-      );  
+      );
       it(
         'should play next',
         () => {

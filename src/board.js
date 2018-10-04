@@ -2,13 +2,11 @@ module.exports = class Board extends Array {
   constructor(board) {
     super(...board || [[0, 0, 0], [0, 0, 0], [0, 0, 0]]);
     this.reset = () => this.forEach((_, i) => this[i] = [0, 0, 0]);
-    this.replace = (players) => {
-      return this.map(
-        vy => vy.map(
-          vx => players[vx]
-        )
-      );
-    };
+    this.replace = players => this.map(
+      vy => vy.map(
+        vx => players[vx]
+      )
+    );
 
     Object.defineProperty(this, 'remaining', {
       get() {
@@ -30,7 +28,7 @@ module.exports = class Board extends Array {
         let dr = 0;
         let dl = 0;
 
-        for (let i = 0, x = 2; i <= 2; i++ , x--) {
+        for (let i = 0, x = 2; i <= 2; i++, x--) {
           dr += this[i][i];
           dl += this[i][x];
 
