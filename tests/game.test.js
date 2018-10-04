@@ -26,8 +26,7 @@ describe('game', () => {
       game.next.should.have.property('player', 'x');
     });
     it('has correct winner', () => {
-      game.should.not.have.property('winner');
-      chai.expect(game.winner).to.be.an('undefined');
+      game.should.have.property('winner', undefined);
     });
   });
 
@@ -44,7 +43,13 @@ describe('game', () => {
           game.board[1].should.to.eql(new Array(undefined, undefined, undefined));
           game.board[2].should.to.eql(new Array(undefined, undefined, undefined));
         }
-      );
+      );  
+      it(
+        'should have remaining with 8',
+        () => {
+          game.board.should.have.property('remaining', 9);
+        }
+      );  
       it(
         'should play next',
         () => {
@@ -52,6 +57,12 @@ describe('game', () => {
           game.next.play({ p: 1 });
           spy.should.have.been.called();
           game.board[0].should.to.eql(new Array(undefined, 'x', undefined));
+        }
+      );
+      it(
+        'should reduce remaining on play',
+        () => {
+          game.board.should.have.property('remaining', 8);
         }
       );
       it(
@@ -131,7 +142,7 @@ describe('game', () => {
             [0, 0, 1],
             [1, 1, 0]
           ];
-          game.should.to.not.own.property('winner');
+          game.should.have.property('winner', undefined);
         }
       );
       it(

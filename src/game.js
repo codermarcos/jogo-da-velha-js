@@ -13,22 +13,11 @@ module.exports = class Game {
       this.onfinish = params.onfinish || this.onfinish;
     }
 
+    const updateWinner = () => this.winner && this.onfinish(this.winner);
     const _players = new Players(params ? params.players : null);
     const _board = new Board(params ? params.board : null);
     const _this = this;
     let _next = -1;
-
-    const updateWinner = () => {
-      let { winner } = _board;
-      if (winner) {
-        this.winner = _players[winner];
-        this.onfinish(this.winner);
-      } else {
-        delete this.winner;
-        winner = false;
-      }
-      return winner;
-    };
 
     this.reset = () => _board.reset();
     this.next = {
@@ -49,11 +38,30 @@ module.exports = class Game {
           throw new Error(`This position has already been played by ${_players[_board[y][x]]}`);
         } else {
           _board[y][x] = _next;
-          this.player = updateWinner() || _next === 1 ? -1 : 1;
-          _this.onnext(_next);
+          const { winner } = _board;
+          
+          if (winner) {
+            _this.winner = _players[winner];
+            _this.onfinish(_this.winner);
+          } else {
+            delete this.winner;
+            if (_board.remaining === 0) {
+              _this.onfinish('draw');
+            } else {
+              this.player = _next === 1 ? -1 : 1;
+              _this.onnext({ next: this.player, remaining: _board.remaining });
+            }
+          }
         }
       },
     };
+
+    Object.defineProperty(this, 'winner', {
+      get() {
+        const { winner } = _board;
+        return _players[winner];
+      }
+    });
 
     Object.defineProperty(this.next, 'player', {
       get() {
@@ -66,11 +74,9 @@ module.exports = class Game {
 
     Object.defineProperty(this, 'board', {
       get() {
-        return _board.map(
-          vy => vy.map(
-            vx => _players[vx]
-          )
-        );
+        const board = _board.replace(_players);
+        board.remaining = _board.remaining;
+        return board;
       },
       set(value) {
         value.forEach(

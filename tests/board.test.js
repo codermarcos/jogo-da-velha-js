@@ -40,6 +40,12 @@ describe('board', () => {
         board.reset.should.be.an.instanceOf(Function);
       }
     );
+    it(
+      'should have remaining with 9',
+      () => {
+        board.should.have.property('remaining', 9);
+      }
+    );
   });
 
   describe('acceptance', () => {
@@ -66,6 +72,12 @@ describe('board', () => {
       () => {
         board.should.have.property('winner');
         chai.expect(board.winner).equal(1);
+      }
+    );
+    it(
+      'should reduce remaining on play',
+      () => {
+        board.should.have.property('remaining', 4);
       }
     );
     it(

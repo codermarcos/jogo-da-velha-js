@@ -94,7 +94,10 @@
   <script>
     const game = new Game({
       onfinish(e) {
-        alert(e);
+        console.log(e);
+      },
+      onnext(e) {
+        console.log(e);
       }
     });
     document
@@ -108,7 +111,6 @@
               el.setAttribute(game.next.player, '');
               const p = el.getAttribute('position');
               game.next.play({ p });
-              console.log(game);
             }
           }
         )
