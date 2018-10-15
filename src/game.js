@@ -13,7 +13,7 @@ module.exports = class Game {
       this.onfinish = params.onfinish || this.onfinish;
     }
 
-    const updateWinner = () => this.winner && this.onfinish(this.winner);
+    const checkWinner = () => this.winner && this.onfinish(this.winner);
     const _players = new Players(params ? params.players : null);
     const _board = new Board(params ? params.board : null);
     const _this = this;
@@ -38,19 +38,13 @@ module.exports = class Game {
           throw new Error(`This position has already been played by ${_players[_board[y][x]]}`);
         } else {
           _board[y][x] = _next;
-          const { winner } = _board;
+          const { winner, remaining } = _board;
 
-          if (winner) {
-            _this.winner = _players[winner];
-            _this.onfinish(_this.winner);
+          if (winner || remaining === 0) {
+            _this.onfinish(this.player || 'draw');
           } else {
-            delete this.winner;
-            if (_board.remaining === 0) {
-              _this.onfinish('draw');
-            } else {
-              this.player = _next === 1 ? -1 : 1;
-              _this.onnext({ next: this.player, remaining: _board.remaining });
-            }
+            this.player = _next === 1 ? -1 : 1;
+            _this.onnext({ next: this.player, remaining: _board.remaining });
           }
         }
       },
@@ -84,11 +78,11 @@ module.exports = class Game {
             (vx, x) => _board[y][x] = _players[vx]
           )
         );
-        updateWinner();
+        checkWinner();
       }
     });
 
     this.onstart();
-    updateWinner();
+    checkWinner();
   }
 };

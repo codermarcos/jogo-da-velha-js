@@ -1,18 +1,19 @@
 {
-  "name": "jogo-da-velha-api",
-  "version": "0.0.0",
-  "description": "Jogo da velha em Node.js com socket.io",
+  "name": "jogo-da-velha-js",
+  "version": "0.0.1",
+  "description": "Library com implementação do Jogo da velha usando apenas Javascript",
   "main": "lib/jogo-da-velha.js",
   "scripts": {
     "test:tdd": "npx mocha tests/**/*.test.js --require babel-register -w",
     "test": "npx mocha tests/**/*.test.js --require babel-register",
     "start": "npx rollup -c -w",
     "build": "npx rollup -c --environment NODE_ENV:production",
-    "lint": "npx eslint ./src/**/*.js"
+    "lint": "npx eslint ./src/**/*.js",
+    "postinstall": "node -e \"console.log('\\x1b[36m','Look at the documentation:','\\x1b[0m','\\x1b[33m','https://github.com/codermarcos/jogo-da-velha-js','\\x1b[0m','\\x1b[36m','\\nThanks for your download and Good game! ❤️','\\x1b[0m')\""
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/codermarcos/jogo-da-velha-api.git"
+    "url": "git+https://github.com/codermarcos/jogo-da-velha-js.git"
   },
   "keywords": [
     "jogo-da-velha",
@@ -32,9 +33,9 @@
   },
   "license": "Unlicense",
   "bugs": {
-    "url": "https://github.com/codermarcos/jogo-da-velha-api/issues"
+    "url": "https://github.com/codermarcos/jogo-da-velha-js/issues"
   },
-  "homepage": "https://github.com/codermarcos/jogo-da-velha-api#readme",
+  "homepage": "https://github.com/codermarcos/jogo-da-velha-js#readme",
   "dependencies": {
     "rollup": "^0.63.5"
   },
