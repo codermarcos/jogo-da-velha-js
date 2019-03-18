@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta charset="UTF-8">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
 
-  <title>JogoDaVelha</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css?family=Slabo+27px');
+    <title>JogoDaVelha</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css?family=Slabo+27px');
+
       * {
         border: 0 none;
         color: #fff;
@@ -16,6 +17,7 @@
         padding: 0;
         text-align: center;
       }
+
       body,
       section {
         width: 100vw;
@@ -26,18 +28,21 @@
         justify-content: center;
         background-color: #000;
       }
+
       section {
-        width: 30%;
+        width: 25%;
         height: 50%;
       }
+
       input {
         appearance: none;
         -moz-appearance: none;
-        -webkit-appearance: none;        
+        -webkit-appearance: none;
         position: relative;
         flex-basis: 28%;
         height: 28%;
       }
+
       input::after {
         position: absolute;
         font-size: 5em;
@@ -45,77 +50,95 @@
         left: 50%;
         transform: translateX(-50%) translateY(-50%);
       }
-      input[x]:checked::after {        
+
+      input[x]:checked::after {
         content: 'X';
       }
-      input[o]:checked::after {        
+
+      input[o]:checked::after {
         content: 'O';
       }
+
+      .grid-horizontal,
       .grid-vertical {
         background-color: #fff;
+        border-radius: 5px;
+      }
+
+      .grid-vertical {
         flex-basis: 1.65%;
         height: 33.3%;
       }
-      .grid-horizontal {        
-        background-color: #fff;
+
+      .grid-horizontal {
         flex-basis: 100%;
-        height: 1.80%;
+        height: 1.65%;
       }
     </style>
-</head>
+  </head>
 
-<body>
-  <section>
-    <input type="checkbox" position="0">
-    <div class="grid-vertical"></div>
-    <input type="checkbox" position="1">
-    <div class="grid-vertical"></div>
-    <input type="checkbox" position="2">
+  <body>
+    <section>
+      <input type="checkbox" position="0">
+      <div class="grid-vertical"></div>
+      <input type="checkbox" position="1">
+      <div class="grid-vertical"></div>
+      <input type="checkbox" position="2">
 
-    <div class="grid-horizontal"></div>
+      <div class="grid-horizontal"></div>
 
-    <input type="checkbox" position="3">
-    <div class="grid-vertical"></div>
-    <input type="checkbox" position="4">
-    <div class="grid-vertical"></div>
-    <input type="checkbox" position="5">
+      <input type="checkbox" position="3">
+      <div class="grid-vertical"></div>
+      <input type="checkbox" position="4">
+      <div class="grid-vertical"></div>
+      <input type="checkbox" position="5">
 
-    <div class="grid-horizontal"></div>
+      <div class="grid-horizontal"></div>
 
-    <input type="checkbox" position="6">
-    <div class="grid-vertical"></div>
-    <input type="checkbox" position="7">
-    <div class="grid-vertical"></div>
-    <input type="checkbox" position="8">
-  </section>
+      <input type="checkbox" position="6">
+      <div class="grid-vertical"></div>
+      <input type="checkbox" position="7">
+      <div class="grid-vertical"></div>
+      <input type="checkbox" position="8">
+    </section>
 
-  <script src="../../lib/jogo-da-velha.js"></script>
+    <script src="../../lib/jogo-da-velha.js"></script>
 
-  <script>
-    const game = new Game({
-      onfinish(e) {
-        console.log(e);
-      },
-      onnext(e) {
-        console.log(e);
-      }
-    });
-    document
-      .querySelectorAll('input')
-      .forEach(el =>
-        el.addEventListener('input',
-          ev => {
-            if (!el.checked) { 
-              el.checked = true; 
-            } else {
-              el.setAttribute(game.next.player, '');
-              const p = el.getAttribute('position');
-              game.next.play({ p });
+    <script>
+      const game = new Game({
+        onfinish(e) {
+          // this calback receive the winner or "draw" 
+          alert(e !== 'draw!' ? `${e} wins!` : e);
+
+          // This method clear the board and restart game
+          game.reset();
+        },
+        onnext(e) {
+          // This callback receive an object with the next player and number of empty slots ('remaining')
+          console.log(e);
+        },
+        onstart() {
+          // This callback is called on class instance or when the .reset is called
+          console.log('start the game');
+        }
+      });
+      document
+        .querySelectorAll('input')
+        .forEach(el =>
+          el.addEventListener('input',
+            ev => {
+              if (!el.checked) {
+                el.checked = true;
+                alert('This space already played!');
+              } else {
+                el.setAttribute(game.next.player, '');
+                const p = el.getAttribute('position');
+                game.next.play({ p });
+              }
             }
-          }
-        )
-      );
-  </script>
-</body>
+          )
+        );
+    </script>
+  </body>
 
 </html>

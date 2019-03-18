@@ -80,6 +80,7 @@ Exemplo simples usando no client side (browser):
         console.log('game start');
       }
     });
+    
     document
       .querySelectorAll('[position]')
       .forEach(el =>

@@ -13,13 +13,17 @@ module.exports = class Game {
       this.onfinish = params.onfinish || this.onfinish;
     }
 
-    const checkWinner = () => this.winner && this.onfinish(this.winner);
+    const checkWinner = _ => this.winner && this.onfinish(this.winner);
     const _players = new Players(params ? params.players : null);
     const _board = new Board(params ? params.board : null);
     const _this = this;
     let _next = -1;
 
-    this.reset = () => _board.reset();
+    this.reset = _ => { 
+      _board.reset(); 
+      this.onstart();
+    };
+
     this.next = {
       play({ p, x, y }) {
         p = parseInt(p, 10);
