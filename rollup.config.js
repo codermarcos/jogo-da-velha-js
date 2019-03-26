@@ -15,7 +15,8 @@ export default {
   plugins: [
     eslint({
       exclude: [
-        'node_modules/**'
+        'node_modules/**',
+        'lib/**'
       ]
     }),
     babel({

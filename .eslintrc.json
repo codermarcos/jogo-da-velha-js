@@ -39,5 +39,13 @@
         "no-restricted-globals": "off",
         "mocha/no-exclusive-tests": "error",
         "import/no-extraneous-dependencies": "off"
-    }
+    },
+    "overrides": [
+        {
+            "files": [
+                "lib/*.js"
+            ],
+            "excludedFiles": "*.js"
+        }
+    ]
 }

@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Library com implementação do Jogo da velha usando apenas Javascript",
   "main": "lib/jogo-da-velha.js",
+  "types": "types/jogo-da-velha.d.ts",
   "scripts": {
     "test:tdd": "npx mocha tests/**/*.test.js --require babel-register -w",
     "test": "npx mocha tests/**/*.test.js --require babel-register",
