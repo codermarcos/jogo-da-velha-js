@@ -1,6 +1,6 @@
 interface IBoard extends Array<Array<number>> {
   readonly remaining?: number;
-} 
+}
 
 interface IPlayers {
   p1: string;
@@ -11,7 +11,7 @@ interface IPosition {
   p: number;
 }
 
-interface ILocation { 
+interface ILocation {
   x: number;
   y: number;
 }
@@ -21,18 +21,23 @@ interface INextPlayer {
   player: string;
 }
 
+interface INextEvent { 
+  next: string, 
+  remaining: number 
+}
+
 interface IJogoDaVelhaJs {
   board?: IBoard;
   players?: IPlayers;
   onstart?(): void;
-  onnext?(event: { next: string, remaining: number }): void;
+  onnext?(event: INextEvent): void;
   onfinish?(event: string | 'DRAW'): void;
 }
 
 declare class JogoDaVelhaJs {
   constructor(options?: IJogoDaVelhaJs);
   public onstart(): void;
-  public onnext(event: { next: string, remaining: number }): void;
+  public onnext(event: INextEvent): void;
   public onfinish(event: string | 'DRAW'): void;
   public reset(): void;
   public readonly board: IBoard;
