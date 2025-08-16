@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+
+  <title>JogoDaVelha</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Slabo+27px');
+
+    * {
+      border: 0 none;
+      color: #fff;
+      font-family: 'Slabo 27px', serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    body,
+    section {
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    body {
+      width: 100vw;
+      height: 100vh;
+      background-color: #000;
+    }
+
+    header {
+      width: 100%;
+      height: 10%;
+    }
+
+    section {
+      aspect-ratio: 1 / 1;
+      width: 25%;
+    }
+
+    input {
+      appearance: none;
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      position: relative;
+      flex-basis: 28%;
+      height: 28%;
+    }
+
+    input::after {
+      position: absolute;
+      font-size: 5em;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+    }
+
+    input:checked::after {
+      content: attr(data-player);
+    }
+
+    .grid-horizontal,
+    .grid-vertical {
+      background-color: #fff;
+      border-radius: 5px;
+    }
+
+    .grid-vertical {
+      flex-basis: 1.65%;
+      height: 33.3%;
+    }
+
+    .grid-horizontal {
+      flex-basis: 100%;
+      height: 1.65%;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Jogo da Velha</h1>
+    <p>It is <strong id="current-player"></strong> turn, there are <strong id="remaining"></strong> moves remaining!
+      Click on the squares to play...</p>
+  </header>
+  <section>
+    <input type="checkbox" name="0">
+    <div class="grid-vertical"></div>
+    <input type="checkbox" name="1">
+    <div class="grid-vertical"></div>
+    <input type="checkbox" name="2">
+
+    <div class="grid-horizontal"></div>
+
+    <input type="checkbox" name="3">
+    <div class="grid-vertical"></div>
+    <input type="checkbox" name="4">
+    <div class="grid-vertical"></div>
+    <input type="checkbox" name="5">
+
+    <div class="grid-horizontal"></div>
+
+    <input type="checkbox" name="6">
+    <div class="grid-vertical"></div>
+    <input type="checkbox" name="7">
+    <div class="grid-vertical"></div>
+    <input type="checkbox" name="8">
+  </section>
+
+  <script src="../lib/jogo-da-velha.global.js"></script>
+
+  <script>
+    const boxes = document.querySelector('section');
+    const symbol = document.querySelector('strong#current-player');
+    const remaining = document.querySelector('strong#remaining');
+    const game = new JogoDaVelha.Game({
+      onFinish(e) {
+        remaining.textContent = 0;
+        console.log('Game finished!');
+        console.log(game.board.toString());
+        requestIdleCallback(() => {
+          // this calback receive the winner player
+          alert(e ? `${e} wins!` : 'Draw!');
+
+          // This method clear the board and restart game
+          game.reset();
+
+          [...boxes.children].forEach(e => {
+            if (!(e instanceof HTMLInputElement)) return;
+            e.removeAttribute('data-player');
+            e.checked = false;
+          });
+        });
+      },
+      onNext(e) {
+        // This callback receive an object with the next player and number of empty slots ('remaining')
+        console.log('Next turn!');
+        console.log(game.board.toString());
+        remaining.textContent = e.remaining;
+        symbol.textContent = e.player.toString();
+      },
+      onStart(g) {
+        // This callback is called on class instance or when the .reset is called
+        remaining.textContent = g.board.remaining;
+        symbol.textContent = g.next.toString();
+        console.log('Game started!');
+        console.log(g.board.toString());
+      }
+    });
+
+    boxes.addEventListener('input',
+      e => {
+        if (!(e.target instanceof HTMLInputElement)) return;
+        const previousPlayer = e.target.dataset.player;
+        try {
+          const { next } = game;
+          e.target.checked = true;
+          e.target.setAttribute('data-player', next.toString());
+          game.play({ p: e.target.name });
+        } catch (error) {
+          alert(error.message);
+          if (previousPlayer) {
+            e.target.dataset.player = previousPlayer;
+            e.target.checked = true;
+          }
+        }
+      }
+    );
+  </script>
+</body>
+
+</html>
