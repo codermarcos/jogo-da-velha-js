@@ -1,36 +1,28 @@
-*.csv
-*.dat
-*.iml
-*.log
-*.out
-*.pid
-*.seed
-*.sublime-*
-*.swo
-*.swp
-*.tgz
-*.xml
-*.yml
-*.md
-*.html
-.DS_Store
-.idea
-.project
-.strong-pm
-.gitignore
-.vscode
-.babelrc
-.editorconfig
-.eslintrc.json
-.travis.yml
-vscode
-tests
-coverage
-examples
-angularX
-javascript
-react
-vue
-implementing
-node_modules
+# Logs
 npm-debug.log
+
+# Pipeline and SCM Files
+.gitignore
+.github
+
+# Configuration files
+.editorconfig
+.eslintrc.js
+.nvmrc
+tsconfig.json
+
+LICENSE
+
+# Tests
+coverage
+*.test.ts
+
+# Documentation
+examples
+docs
+
+# Source files
+src
+
+# Dependencies
+node_modules
