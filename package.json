@@ -1,63 +1,65 @@
 {
-  "name": "jogo-da-velha-js",
-  "version": "0.0.1",
-  "description": "Library com implementação do Jogo da velha usando apenas Javascript",
-  "main": "lib/game.js",
-  "esnext": "lib/game.js",
-  "types": "types/game.d.ts",
-  "type": "module",
-  "scripts": {
-    "build": "tsup",
-    "test": "node --test",
-    "test:watch": "npm run test -- --test",
-    "postinstall": "node -e \"console.log('\\x1b[36m','Look at the documentation:','\\x1b[0m','\\x1b[33m','https://github.com/codermarcos/jogo-da-velha-js','\\x1b[0m','\\x1b[36m','\\nThanks for your download and Good game! ❤️','\\x1b[0m')\""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/codermarcos/jogo-da-velha-js.git"
-  },
-  "keywords": [
-    "jogo-da-velha",
-    "jogo",
-    "velha",
-    "hash-game",
-    "hash",
-    "node",
-    "javascript",
-    "js",
-    "game"
-  ],
-  "author": {
-    "name": "codermarcos",
-    "email": "coder.marcos@gmail.com",
-    "url": "https://github.com/codermarcos"
-  },
-  "license": "Unlicense",
-  "bugs": {
-    "url": "https://github.com/codermarcos/jogo-da-velha-js/issues"
-  },
-  "homepage": "https://github.com/codermarcos/jogo-da-velha-js#readme",
-  "devDependencies": {
-    "tsup": "^8.5.0",
-    "typescript": "^5.9.2"
-  },
-  "engines": {
-    "node": "24.x"
-  },
-  "tsup": {
-    "entry": {
-      "jogo-da-velha": "src/game.ts"
-    },
-    "globalName": "JogoDaVelha",
-    "sourcemap": true,
-    "dtsBundle": true,
-    "clean": true,
-    "dts": true,
-    "outDir": "lib",
-    "format": [
-      "esm",
-      "cjs",
-      "iife"
-    ]
-  }
+	"name": "jogo-da-velha-js",
+	"version": "0.0.1",
+	"description": "Library com implementação do Jogo da velha usando apenas Javascript",
+	"main": "lib/game.js",
+	"esnext": "lib/game.js",
+	"types": "types/game.d.ts",
+	"type": "module",
+	"scripts": {
+		"build": "tsup",
+		"test": "node --test",
+		"test:watch": "node --test --watch",
+		"lint": "biome check --write",
+		"postinstall": "node -e \"console.log('\\x1b[36m','Look at the documentation:','\\x1b[0m','\\x1b[33m','https://github.com/codermarcos/jogo-da-velha-js','\\x1b[0m','\\x1b[36m','\\nThanks for your download and Good game! ❤️','\\x1b[0m')\""
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/codermarcos/jogo-da-velha-js.git"
+	},
+	"keywords": [
+		"jogo-da-velha",
+		"jogo",
+		"velha",
+		"hash-game",
+		"hash",
+		"node",
+		"javascript",
+		"js",
+		"game"
+	],
+	"author": {
+		"name": "codermarcos",
+		"email": "coder.marcos@gmail.com",
+		"url": "https://github.com/codermarcos"
+	},
+	"license": "Unlicense",
+	"bugs": {
+		"url": "https://github.com/codermarcos/jogo-da-velha-js/issues"
+	},
+	"homepage": "https://github.com/codermarcos/jogo-da-velha-js#readme",
+	"devDependencies": {
+		"@biomejs/biome": "2.2.0",
+		"tsup": "^8.5.0",
+		"typescript": "^5.9.2"
+	},
+	"engines": {
+		"node": "24.x"
+	},
+	"tsup": {
+		"entry": {
+			"jogo-da-velha": "src/game.ts"
+		},
+		"globalName": "JogoDaVelha",
+		"sourcemap": true,
+		"dtsBundle": true,
+		"clean": true,
+		"dts": true,
+		"outDir": "lib",
+		"format": [
+			"esm",
+			"cjs",
+			"iife"
+		]
+	}
 }
