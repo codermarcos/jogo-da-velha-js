@@ -1,4 +1,4 @@
-import { type StateType, type MoveSymbols, type MoveValues, State, MoveO, MoveX, type StateKeys } from './state.ts';
+import { type StateType, type MoveSymbols, type MoveValues, State, type MoveO, type MoveX, type StateKeys } from './state.ts';
 
 type BoardSpaces<T> = [T, T, T, T, T, T, T, T, T];
 export type BoardPositions = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
@@ -8,15 +8,15 @@ type BoardSymbolInput = BoardSpaces<MoveSymbols | ' '>;
 export type BoardInput = BoardValueInput | BoardSymbolInput;
 
 export class Board implements Iterable<StateType> {
-  declare [0]: StateType;
-  declare [1]: StateType;
-  declare [2]: StateType;
-  declare [3]: StateType;
-  declare [4]: StateType;
-  declare [5]: StateType;
-  declare [6]: StateType;
-  declare [7]: StateType;
-  declare [8]: StateType;
+  declare 0: StateType;
+  declare 1: StateType;
+  declare 2: StateType;
+  declare 3: StateType;
+  declare 4: StateType;
+  declare 5: StateType;
+  declare 6: StateType;
+  declare 7: StateType;
+  declare 8: StateType;
 
   public readonly length = 9;
 
@@ -66,7 +66,7 @@ export class Board implements Iterable<StateType> {
   }
 
   public toJSON(): Array<MoveSymbols> {
-    let json = [];
+    const json = [];
     for (let i = 0; i < this.length; i++) 
       json.push(this[i as BoardPositions].toString());
     return json as Array<MoveSymbols>;

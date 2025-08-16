@@ -1,4 +1,4 @@
-import { MoveX, MoveO, State, type MoveSymbols, type MoveValues } from "./state.ts";
+import { type MoveX, type MoveO, State, type MoveSymbols, type MoveValues } from "./state.ts";
 import { Board, type BoardInput } from "./board.ts";
 
 export class Game {

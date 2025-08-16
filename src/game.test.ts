@@ -1,8 +1,8 @@
-import { describe, beforeEach, it } from 'node:test';
+import { describe, it } from 'node:test';
 import assert, { AssertionError } from 'node:assert';
 
 import { Game } from './game.ts';
-import { type Player } from './state.ts';
+import type { MoveO, MoveX } from './state.ts';
 
 describe('Game', () => {
   describe('start', () => {
@@ -64,7 +64,7 @@ describe('Game', () => {
       'should call onNext callback',
       () => {
         let called = false;
-        let next: { player: Player, remaining: number } | undefined;
+        let next: { player: MoveX | MoveO, remaining: number } | undefined;
         const game = new Game({
           onNext: (n) => { called = true; next = n; }
         });
@@ -79,7 +79,7 @@ describe('Game', () => {
       'should call onFinish callback',
       () => {
         let called = false;
-        let winner: Player | undefined;
+        let winner: MoveX | MoveO | undefined;
         const game = new Game({
           onFinish: (w) => { called = true; winner = w; }
         });
@@ -98,7 +98,7 @@ describe('Game', () => {
         game.play({ p: 6 });
 
         assert.ok(called, 'onFinish callback should be called when the game is over');
-        assert.equal(winner.toString(), 'X', 'Game should has winner');
+        assert.equal(winner?.toString?.(), 'X', 'Game should has winner');
         assert.strictEqual(game.board.remaining, 2, 'Game should end remainig 2 moves');
 
         try {
