@@ -1,0 +1,74 @@
+name: New Release
+
+on:
+  push: 
+    branches: [main]
+    paths-ignore: 
+      - "**/*.md"
+      - "LISCENSE"
+      - ".gitignore"
+      - ".eslintrs.js"
+      - ".eslintignore"
+      - "**/*.test.ts"
+
+permissions:
+  contents: write
+  discussions: write
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set git configuration
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"  
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          key: node-modules-${{ hashFiles('**/package-lock.json') }}
+          path: | 
+            ~/.npm
+            ./node_modules
+
+      - name: Get package version
+        run: |
+          PACKAGE_VERSION=$(node -p -e "require('./package.json').version")
+          echo "PACKAGE_VERSION=$PACKAGE_VERSION" >> $GITHUB_ENV
+          echo "Package version is $PACKAGE_VERSION"
+
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build package
+        run: npm run build
+
+
+      - name: Create Github Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "JogoDaVelha - v${{ env.PACKAGE_VERSION }}"
+          tag_name: "v${{ env.PACKAGE_VERSION }}"
+          files: | 
+            lib/*
+            package.json
+            package-lock.json
+
+      - name: Create Npm Release
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm publish --access public --userconfig ./.npmrc
+
